@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}
+DashBoard
+{% endblock title %}
+
+{% block content %}
+<div class="container m-auto mt-4 bg-body-tertiary">
+    <div class="mt-2">
+        <a class="btn btn-warning" href="{% url 'donation_history'%}">Donation History</a>
+    </div>
+    <div class="mt-2">
+        {% for card in all_request%}
+        {% if card.is_accecpted == False%}
+        <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">Name: {{card.user.first_name}} {{card.user.last_name}} </h5>
+              <h6 class="card-text">Blood Group: <i class="text-danger">{{card.blood_group}}</i></h6>
+              <h6>Phone Number: {{card.phone}}</h6>
+              <h6>Hospital Name: {{card.hospital_name}}</h6>
+              <h6>Hospital Address: {{card.village}}, {% if card.union%}{{card.union}},{%endif%} {%if card.psot_office %}{{card.psot_office}},{%endif%} {{card.Upazila}}, {{card.district}}</h6>
+              {% if user != card.user %}
+              <p class="card-text"><a class="btn btn-danger" href="{% url 'accept' card.id%}">Accept</a></p>
+              {%endif%}
+            </div>
+          </div>
+        {% endif%}
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+Update Profile Page
+{% endblock title %}
+
+{% block content %}
+<form class="p-5 container" action="" method="POST" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <h1 class="text-center">Register page</h1>
+    <!-- {{form|crispy}} -->
+    {% for field in form.hidden_fields %}
+    {{ field.errors }}
+    {% endfor %}
+    {% if messages%}
+    {% for msg in messages%}
+    <p class="text-center">{{msg}}</p>
+    {% endfor %}
+    {% endif%}
+    {% for item in form %}
+    {{item.label_tag}}
+    {{item}}
+    {{item.errors | striptags}}
+    <br>
+    {% endfor %}
+    <br>
+    <button class="btn btn-success" type="submit">Update</button>
+</form>
+{% endblock content %}

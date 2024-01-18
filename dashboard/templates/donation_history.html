@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+Donete History
+{% endblock title %}
+
+{% block content %}
+<div class="container m-auto mt-4 bg-body-tertiary">
+    <table class="table table-striped">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Doner Name</th>
+            <th scope="col">Receiver Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Action</th>
+        </tr>
+        {%for data in all_data%}
+        <tr>
+            <td>{{data.id}}</td>
+            <td>{{data.doner.first_name}} {{data.doner.last_name}}</td>
+            <td>{{data.receiver.first_name}} {{data.receiver.last_name}}</td>
+            <td>{{data.donate_date}}</td>
+            <td>
+                {% if data.canceled == False and data.donation_done == False%}
+                <a class="btn btn-success" href="{% url 'donation_done' data.id %}">Done</a>
+                <a class="btn btn-danger" href="{% url 'donation_cancel' data.id %}">Cancel</a>
+                {% elif data.donation_done%}
+                <p class="bg-success-subtle text-center">Donation Done</p>
+                {%else%}
+                <p class="bg-danger-subtle text-center">Donation Done</p>
+                {% endif%}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+        
+</div>
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}
+Profile page
+{% endblock title %}
+
+{% block content %}
+<div style="width: 1000px; border-radius: 20px" class='bg-secondary m-auto mt-5 p-3 d-flex align-items-center justify-content-center gap-3'>
+    <div>
+        <img style="width:300px; height:300; border-radius:200px" src="{{user_account.image.url}}" alt="">
+    </div>
+    <div>
+        <h3>Name: {{user_account.user.first_name}} {{user_account.user.last_name}}</h3>
+        <h5>Email: {{user_account.user.email}}</h5>
+        <h5>Age: {{user_account.age}}</h5>
+        <h5>Address: {{user_account.city}},{{user_account.country}}</h5>
+        <h5>Blood Group: {{user_account.blood_group}}</h5>
+        <h5>{% if user_account.last_donate%}
+            Last Donate Date: {{user_account.last_donate}}
+            {% endif%}
+        </h5>
+        <h5>{% if user_account.can_donate%}
+            Donation Status: ✔️
+            {%else%}
+            Donation Status: ❌
+            {% endif%}
+        </h5>
+        <a class="btn btn-warning" href="{% url 'user_update' %}">Update </a>
+
+    </div>
+</div>
+
+{% endblock content %}
