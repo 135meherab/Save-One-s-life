@@ -30,7 +30,7 @@ class RegisterView(FormView):
         form.save()
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
-        activation_link = f'http://127.0.0.1:8000/user/activate/{uid}/{token}'
+        activation_link = f'https://save-ones-life.onrender.com/user/activate/{uid}/{token}'
         mail_subject = "Varify Account"
         mail_body = render_to_string("verify_account.html",{"user": user, "activation_link": activation_link})
         mail = EmailMultiAlternatives(mail_subject, "", to=[user.email])
