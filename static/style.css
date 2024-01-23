@@ -8,6 +8,11 @@ body {
   .navbar-nav .nav-item a.active {
     border-bottom: 2px solid red;
 }
+.card-img{
+  width: 390px;
+  height: 170px;
+  object-fit: cover;
+}
 
 .gallery-card{
   position: relative;
