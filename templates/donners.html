@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Donors list
+{% endblock title %}
+
+{% block content %}
+<div class="d-flex flex-wrap justify-content-center">
+    {% for data in all_data%}
+
+        <div class="card m-2" style="max-width: 540px;">
+            <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{data.image.url}}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h6>Name: {{data.user.first_name}} {{data.user.last_name}}</h6>
+                    <h6>Blood Group: <i class="text-danger">{{data.blood_group}}</i></h6>
+                    <h6>Address: <i class="text-danger">{{data.city}}</i></h6>
+                    <h6>{% if data.last_donate%}
+                        Last Donate Date: {{data.last_donate}}
+                        {% endif%}
+                    </h6>
+                    <h6>
+                        {% if data.can_donate%}
+                        Donation Status: ✔️
+                        {%else%}
+                        Donation Status: ❌
+                        {% endif%}
+                    </h6>
+                </div>
+            </div>
+            </div>
+        </div>
+    {% endfor%}
+</div> 
+
+{% endblock content %}
+<link rel="stylesheet" href="{% static 'style.css' %}">

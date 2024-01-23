@@ -1,30 +1,155 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block title %}
 Register Page
 {% endblock title %}
 
 {% block content %}
-<form class="p-5 container" action="" method="POST" enctype="multipart/form-data" novalidate>
-    {% csrf_token %}
-    <h1 class="text-center">Register page</h1>
-    <!-- {{form|crispy}} -->
-    {% for field in form.hidden_fields %}
-    {{ field.errors }}
-    {% endfor %}
-    {% if messages%}
+{%if messages%}
+<script>
+  document.addEventListener("DOMContentLoaded",function(){
     {% for msg in messages%}
-    <p class="text-center">{{msg}}</p>
-    {% endfor %}
-    {% endif%}
-    {% for item in form %}
-    {{item.label_tag}}
-    {{item}}
-    {{item.errors | striptags}}
-    <br>
-    {% endfor %}
-    <br>
-    <button class="btn btn-success" type="submit">Register</button>
-</form>
+      Swal.fire({
+        icon: '{{ msg.tags }}',
+        title: '{{ msg.tags|title }}',
+        text: '{{ msg}}',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    {% endfor%}
+  })
+</script>
+{%endif%}  
+<div class="container m-auto d-flex justify-content-center align-items-center gap-4">
+  <div class="col-md-5">
+    <img src="{% static "images/reg1.jpg" %}" width="100%" alt="">
+  </div>
+  <div class="col-md-7 mt-5">
+      <h1 class="text-center">Register page</h1>
+      <form action="" method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {% for field in form.hidden_fields %}
+        {{ field.errors }}
+        {% endfor %}
+        <!-- {{form|crispy}} -->
+      <div class="mb-3">
+        {{ form.username.label }}
+        {{form.username}}
+        {% if form.username.errors %}
+          {% for error in form.username.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form.first_name.label }}
+          {{form.first_name}}
+          {% if form.first_name.errors %}
+          {% for error in form.first_name.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+          {{ form.last_name.label }}
+          {{form.last_name}}
+          {% if form.last_name.errors %}
+          {% for error in form.last_name.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form.age.label }}
+          {{form.age}}
+          {% if form.age.errors %}
+          {% for error in form.age.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+          {{ form.blood_group.label }}
+          {{ form.blood_group}}
+          {% if form.blood_group.errors %}
+          {% for error in form.blood_group.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+        </div>
+      </div>
+      <div>
+        Upload Your Image
+        {{form.image}}
+        {% if form.image.errors %}
+          {% for error in form.image.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form.city.label }}
+          {{form.city}}
+          {% if form.city.errors %}
+          {% for error in form.city.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+          {{ form.country.label }}
+          {{form.country}}
+          {% if form.country.errors %}
+          {% for error in form.country.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+        </div>
+      </div>
+      <br>
+      <div>
+        {{ form.email.label }}
+        {{form.email}}
+        {% if form.email.errors %}
+          {% for error in form.email.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+      </div>
+  
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          {{ form.password1.label }}
+          {{form.password1}}
+          {% if form.password1.errors %}
+          {% for error in form.password1.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+          {{ form.password2.label }}
+          {{form.password2}}
+          {% if form.password2.errors %}
+          {% for error in form.password2.errors %}
+            <p class="text-danger fst-italic p-2">{{ error }}</p>
+          {% endfor %} 
+        {% endif %}
+        </div>
+      </div>
+      <br>
+  
+        <button class="btn btn-danger" type="submit">Register</button>
+    </form>
+  </div>
+</div>
+
 {% endblock content %}
 

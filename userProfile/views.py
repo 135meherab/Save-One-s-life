@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 # Create your views here.
 
 
@@ -68,4 +69,5 @@ class UserUpdateView(LoginRequiredMixin,UpdateView):
                 user_account.can_donate = False
 
         user_account.save()
+        messages.success(self.request,"Profile updated successfully")
         return super().form_valid(form)

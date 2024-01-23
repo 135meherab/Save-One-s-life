@@ -4,9 +4,24 @@ Profile page
 {% endblock title %}
 
 {% block content %}
-<div style="width: 1000px; border-radius: 20px" class='bg-secondary m-auto mt-5 p-3 d-flex align-items-center justify-content-center gap-3'>
+{%if messages%}
+<script>
+  document.addEventListener("DOMContentLoaded",function(){
+    {% for msg in messages%}
+      Swal.fire({
+        icon: '{{ msg.tags }}',
+        title: '{{ msg.tags|title }}',
+        text: '{{ msg}}',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    {% endfor%}
+  })
+</script>
+{%endif%}
+<div style="width: 1000px; border-radius: 20px; box-shadow: 4px 4px 8px gray" class='bg-body-secondary m-auto mt-5 p-3 d-flex align-items-center justify-content-center gap-3'>
     <div>
-        <img style="width:300px; height:300; border-radius:200px" src="{{user_account.image.url}}" alt="">
+        <img style="border-radius:200px" width="300px" height="300px" src="{{user_account.image.url}}" alt="">
     </div>
     <div>
         <h3>Name: {{user_account.user.first_name}} {{user_account.user.last_name}}</h3>
@@ -25,6 +40,7 @@ Profile page
             {% endif%}
         </h5>
         <a class="btn btn-warning" href="{% url 'user_update' %}">Update </a>
+        <a class="btn btn-danger" href="{% url 'donation_history'%}">My donation history</a>
 
     </div>
 </div>

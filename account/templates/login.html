@@ -1,29 +1,52 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block title %}
 Login Page
 {% endblock title %}
 
 {% block content %}
-<form class="p-5 container" action="" method="POST" enctype="multipart/form-data" novalidate>
-    {% csrf_token %}
-    <h1 class="text-center">Login page</h1>
-    <!-- {{form|crispy}} -->
-    {% for field in form.hidden_fields %}
-    {{ field.errors }}
-    {% endfor %}
-    {% if messages%}
+{%if messages%}
+<script>
+  document.addEventListener("DOMContentLoaded",function(){
     {% for msg in messages%}
-    <p class="text-center">{{msg}}</p>
-    {% endfor %}
-    {% endif%}
-    {% for item in form %}
-    {{item.label_tag}}
-    {{item}}
-    {{item.errors | striptags}}
-    <br>
-    {% endfor %}
-    <button class="btn btn-success" type="submit">Login</button>
-</form>
+      Swal.fire({
+        icon: '{{ msg.tags }}',
+        title: '{{ msg.tags|title }}',
+        text: '{{ msg}}',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    {% endfor%}
+  })
+</script>
+{%endif%}
+<div class="p-5 container m-auto row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <img src="{% static "images/signin.jpg" %}" width="100%" alt="">
+    </div>
+    <div class="col-md-6">
+      <form  action="" method="POST" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        <h1 class="text-center">Login page</h1>
+        <!-- {{form|crispy}} -->
+        {% for field in form.hidden_fields %}
+        {{ field.errors }}
+        {% endfor %}
+        {% if messages%}
+        {% for msg in messages%}
+        <p class="text-center">{{msg}}</p>
+        {% endfor %}
+        {% endif%}
+        {% for item in form %}
+        {{item.label_tag}}
+        {{item}}
+        {{item.errors | striptags}}
+        <br>
+        {% endfor %}
+        <button class="btn btn-success" type="submit">Login</button>
+    </form>
+    </div>
+</div>
 {% endblock content %}
 

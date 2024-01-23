@@ -6,7 +6,7 @@ from .forms import BloodReqestForm
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
-from account.models import UserAccount
+from account.models import UserAccount, UserBloodGroup
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -15,9 +15,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 @login_required()
-def dashboard(request):
-    all_request = RequestForBlood.objects.all() 
-    return render(request, 'dashboard.html', {'all_request': all_request, 'user': request.user})
+def dashboard(request, blood_slug=None):
+    blood = UserBloodGroup.objects.all()
+    all_requests = RequestForBlood.objects.all()
+    if blood_slug is not None:
+        blood_name = UserBloodGroup.objects.get(slug = blood_slug)
+        all_requests = RequestForBlood.objects.filter(blood_group = blood_name)
+     
+    return render(request, 'dashboard.html', {'all_request': all_requests, 'user': request.user, 'blood_groups': blood})
 
 
 class BloodRequestView(LoginRequiredMixin,CreateView):

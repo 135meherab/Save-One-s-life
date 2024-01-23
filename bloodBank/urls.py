@@ -23,10 +23,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home_page, name= 'home_page'),
-    path('fileter/<slug:blood_slug>', views.home_page, name= 'filter'),
+    path('doners/', views.donners, name= 'donners'),
     path('user/', include('account.urls')),
     path('profile/', include('userProfile.urls')),
-    path('dashboard/', include('dashboard.urls')),
+    path('all_requests/', include('dashboard.urls')),
 ]
 
 if settings.DEBUG:

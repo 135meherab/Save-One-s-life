@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from account.models import UserAccount, UserBloodGroup
+from datetime import datetime, timedelta
+def home_page(request):
+    return render(request, 'home.html')
 
-def home_page(request, blood_slug=None):
-    blood = UserBloodGroup.objects.all()
-    all_data = UserAccount.objects.filter(can_donate=True)
-    if blood_slug is not None:
-        blood_name = UserBloodGroup.objects.get(slug = blood_slug)
-        all_data = UserAccount.objects.filter(can_donate=True, blood_group = blood_name)
-    return render(request, 'home.html', {'all_data': all_data, 'blood_groups': blood})
+def donners(request):
+    all_data = UserAccount.objects.all()
+    today_date = datetime.now().date()
+    min_day = timedelta(days=90)
+    return render(request, 'donners.html', {'all_data': all_data, 'today_date': today_date, 'min_day': min_day})
